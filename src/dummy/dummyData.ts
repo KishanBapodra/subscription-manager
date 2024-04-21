@@ -1,0 +1,42 @@
+export const subscriptionsDummy = [
+  {
+    id: 1,
+    name: "Netflix",
+    price: 9.99,
+    status: true,
+    frequency: { period: "monthly", interval: 1 },
+    startDate: Date.now(),
+  },
+  {
+    id: 2,
+    name: "Copilot",
+    price: 4.99,
+    status: true,
+    frequency: { period: "monthly", interval: 2 },
+    startDate: Date.now(),
+  },
+  {
+    id: 3,
+    name: "Amazon Prime",
+    price: 12.99,
+    status: false,
+    frequency: { period: "yearly" },
+    startDate: Date.now(),
+  },
+  {
+    id: 4,
+    name: "HBO Max",
+    price: 14.99,
+    status: false,
+    frequency: { period: "monthly", interval: 3 },
+    startDate: Date.now(),
+  },
+  {
+    id: 5,
+    name: "Disney+",
+    price: 7.99,
+    status: false,
+    frequency: { period: "monthly" },
+    startDate: Date.now(),
+  },
+];
