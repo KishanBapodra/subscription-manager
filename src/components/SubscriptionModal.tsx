@@ -11,7 +11,7 @@ const SubscriptionModal = () => {
   } = useForm();
   const { addSubscription } = useSubscription();
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: any) => {
     const subscription = {
       id: uuidv4(),
       name: e.name,
@@ -28,7 +28,7 @@ const SubscriptionModal = () => {
     (document.getElementById("add_sub_modal") as HTMLDialogElement).close();
   };
 
-  const handleClose = (e) => {
+  const handleClose = () => {
     reset();
   };
   return (

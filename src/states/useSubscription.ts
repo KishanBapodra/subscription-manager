@@ -23,7 +23,7 @@ export const useSubscription = create<SubscriptionState>((set) => ({
       return { subscriptions: updatedSubscriptions };
     }),
 
-  removeSubscription: (subscriptionId: number) =>
+  removeSubscription: (subscriptionId: string) =>
     set((state) => {
       const updatedSubscriptions = state.subscriptions.filter(
         (sub) => sub.id !== subscriptionId
