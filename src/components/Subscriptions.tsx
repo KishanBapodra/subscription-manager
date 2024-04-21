@@ -31,7 +31,7 @@ const Subscriptions = () => {
     };
   }, []);
 
-  const handleStatus = (id: number) => {
+  const handleStatus = (id: string) => {
     const updatedSubscriptions = subscriptions.map(
       (subscription: Subscription) => {
         if (subscription.id === id) {
@@ -44,7 +44,7 @@ const Subscriptions = () => {
     setSubscriptions(updatedSubscriptions);
   };
 
-  const handleSubscription = (id: number) => {
+  const handleSubscription = (id: string) => {
     removeSubscription(id);
   };
 

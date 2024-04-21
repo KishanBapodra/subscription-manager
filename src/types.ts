@@ -1,5 +1,5 @@
 export interface Subscription {
-  id: number;
+  id: string;
   name: string;
   price: number;
   status: boolean;

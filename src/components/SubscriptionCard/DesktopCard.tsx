@@ -2,8 +2,8 @@ import { Subscription } from "../../types";
 
 interface DesktopCard {
   subscription: Subscription;
-  handleStatus: (id: number) => void;
-  handleSubscription: (id: number) => void;
+  handleStatus: (id: string) => void;
+  handleSubscription: (id: string) => void;
 }
 
 const DesktopCard: React.FC<DesktopCard> = ({

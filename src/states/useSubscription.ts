@@ -5,7 +5,7 @@ interface SubscriptionState {
   subscriptions: Subscription[];
   setSubscriptions: (subscriptions: Subscription[]) => void;
   addSubscription: (subscription: Subscription) => void;
-  removeSubscription: (subscriptionId: number) => void;
+  removeSubscription: (subscriptionId: string) => void;
 }
 
 export const useSubscription = create<SubscriptionState>((set) => ({
