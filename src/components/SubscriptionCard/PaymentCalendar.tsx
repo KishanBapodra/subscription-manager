@@ -1,7 +1,7 @@
 import Calendar from "react-calendar";
 import "../../styles.css";
 
-function isSameDay(date1, date2) {
+function isSameDay(date1: Date, date2: Date) {
   return (
     date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
@@ -14,24 +14,16 @@ const PaymentCalendar = () => {
   const value = new Date(2023, 4, 1); // Example selected `date`
   const paymentDueDates = [new Date(2023, 4, 15), new Date(2023, 5, 1)]; // Example payment due dates
 
-  const tileClassName = ({ date }) => {
+  const tileClassName = ({ date }: { date: Date }) => {
     if (paymentDueDates.find((dueDate) => isSameDay(dueDate, date))) {
       return "payment-due";
     }
   };
 
-  const handleChange = (e) => {
-    console.log(e);
-  };
-
   return (
     <div className="flex flex-col justify-center w-full items-center gap-3">
       <h2 className="text-2xl font-bold">Payment Calendar</h2>
-      <Calendar
-        onChange={handleChange}
-        value={value}
-        tileClassName={tileClassName}
-      />
+      <Calendar value={value} tileClassName={tileClassName} />
     </div>
   );
 };
