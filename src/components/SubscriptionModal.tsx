@@ -24,7 +24,7 @@ const SubscriptionModal = () => {
       status: true,
       frequency: {
         period: e.period,
-        interval: e.interval ?? 1,
+        interval: e.interval,
       },
       startDate: formattedDate,
     };
