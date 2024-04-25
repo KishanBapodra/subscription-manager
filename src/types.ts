@@ -5,6 +5,7 @@ export interface Subscription {
   status: boolean;
   frequency: {
     period: string;
-    interval?: number;
+    interval: number;
   };
+  startDate: string;
 }

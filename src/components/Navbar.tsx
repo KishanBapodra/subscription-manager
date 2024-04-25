@@ -4,8 +4,8 @@ import SubscriptionModal from "./SubscriptionModal";
 import { isMobile } from "react-device-detect";
 
 const Navbar = () => {
-  const handleClick = (e) => {
-    if (e.target.checked) {
+  const handleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    if ((e.target as HTMLInputElement).checked) {
       document.documentElement.style.setProperty(
         "--calendar-bg-color",
         "#bc93f9"

@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useSubscription } from "../states/useSubscription";
 import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
+import { format, parseISO } from "date-fns";
 
 const SubscriptionModal = () => {
   const {
@@ -10,8 +12,11 @@ const SubscriptionModal = () => {
     formState: { errors, isSubmitted },
   } = useForm();
   const { addSubscription } = useSubscription();
+  const [inputType, setInputType] = useState("text");
 
   const onSubmit = (e: any) => {
+    const date = parseISO(e.startDate);
+    const formattedDate = format(date, "EEE MMM dd yyyy HH:mm:ss 'GMT'X (zzz)");
     const subscription = {
       id: uuidv4(),
       name: e.name,
@@ -19,10 +24,11 @@ const SubscriptionModal = () => {
       status: true,
       frequency: {
         period: e.period,
-        interval: e.interval,
+        interval: e.interval ?? 1,
       },
-      startDate: Date.now(),
+      startDate: formattedDate,
     };
+
     addSubscription(subscription);
     reset();
     (document.getElementById("add_sub_modal") as HTMLDialogElement).close();
@@ -83,22 +89,36 @@ const SubscriptionModal = () => {
             </div>
           </div>
           <div className="flex gap-4">
+            <div className="flex flex-col gap-[2px] w-5/12">
+              <input
+                id="startdate"
+                type={inputType}
+                className="input input-bordered "
+                placeholder="Start Date"
+                {...register("startDate", { required: true })}
+                onFocus={() => setInputType("date")}
+              />
+              {isSubmitted && errors.startDate && (
+                <span className="text-xs text-error">Start Date required</span>
+              )}
+            </div>
             <select
               id="period"
               defaultValue="Monthly"
               {...register("period", { required: true })}
-              className="select select-bordered w-full max-w-xs"
+              className="select select-bordered w-4/12 max-w-xs"
             >
               <option>Monthly</option>
               <option>Yearly</option>
               <option>Weekly</option>
             </select>
-            <div className="flex flex-col gap-[2px] w-2/6">
+            <div className="flex flex-col gap-[2px] w-3/12">
               <input
                 id="interval"
                 type="text"
                 inputMode="numeric"
                 placeholder="Interval"
+                defaultValue={1}
                 {...register("interval", {
                   required: true,
                   pattern: {

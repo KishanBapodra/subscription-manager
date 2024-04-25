@@ -1,29 +1,80 @@
 import Calendar from "react-calendar";
 import "../../styles.css";
-
-function isSameDay(date1: Date, date2: Date) {
-  return (
-    date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate()
-  );
-}
+import { useSubscription } from "../../states/useSubscription";
+import {
+  addMonths,
+  addWeeks,
+  addYears,
+  isSameDay,
+  isWithinInterval,
+} from "date-fns";
 
 const PaymentCalendar = () => {
-  // const [value, onChange] = useState(new Date());
-  const value = new Date(2023, 4, 1); // Example selected `date`
-  const paymentDueDates = [new Date(2023, 4, 15), new Date(2023, 5, 1)]; // Example payment due dates
+  const subscriptions = useSubscription((state) => state.subscriptions);
+
+  const getNextPaymentDates = (
+    startDate: string,
+    frequency: string,
+    status: boolean,
+    interval: number = 1
+  ) => {
+    const start = new Date(startDate);
+    const paymentDates: Date[] = [];
+    if (!status) return paymentDates;
+
+    for (let i = 0; i < 24; i++) {
+      let nextPaymentDate: Date | null = null;
+      switch (frequency) {
+        case "Monthly":
+          nextPaymentDate = addMonths(start, i * interval);
+          break;
+        case "Yearly":
+          nextPaymentDate = addYears(start, i * interval);
+          break;
+        case "Weekly":
+          nextPaymentDate = addWeeks(start, i * interval);
+          break;
+      }
+      const showPaymentStart = new Date();
+      const showPaymentEnd = addYears(showPaymentStart, 2);
+
+      if (nextPaymentDate) {
+        if (
+          isWithinInterval(nextPaymentDate, {
+            start: showPaymentStart,
+            end: showPaymentEnd,
+          })
+        )
+          paymentDates.push(nextPaymentDate);
+      }
+    }
+
+    return paymentDates;
+  };
+
+  const paymentDues = subscriptions.map((sub) =>
+    getNextPaymentDates(
+      sub.startDate,
+      sub.frequency.period,
+      sub.status,
+      sub.frequency.interval
+    )
+  );
 
   const tileClassName = ({ date }: { date: Date }) => {
-    if (paymentDueDates.find((dueDate) => isSameDay(dueDate, date))) {
+    if (paymentDues.flat().find((dueDate) => isSameDay(dueDate, date))) {
       return "payment-due";
     }
   };
 
   return (
-    <div className="flex flex-col justify-center w-full items-center gap-3">
-      <h2 className="text-2xl font-bold">Payment Calendar</h2>
-      <Calendar value={value} tileClassName={tileClassName} />
+    <div className="sm:m-3 flex flex-col justify-center w-full items-center gap-3">
+      {/* <h2 className="text-2xl font-bold">Payment Calendar</h2> */}
+      <Calendar
+        view="month"
+        showNeighboringMonth={false}
+        tileClassName={tileClassName}
+      />
     </div>
   );
 };
