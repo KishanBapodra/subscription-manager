@@ -75,7 +75,7 @@ const Subscriptions = () => {
           <h3 className="text-2xl font-bold m-0">Dashboard</h3>
           {subscriptions.length === 0 && (
             <div className="flex w-full h-[250px] gap-4 font-bold text-3xl items-center justify-center">
-              <h5 className="">So Empty</h5>
+              <h5 className="">Soo Empty</h5>
               <button
                 onClick={() => {
                   (
